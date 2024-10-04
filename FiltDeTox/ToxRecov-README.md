@@ -82,17 +82,17 @@ library(ape)
 library(cowplot)
 library(RColorBrewer)
 ```
-      ## Run the FiltDeTox Classification and Filtering:
+## Run the FiltDeTox Classification and Filtering:
 
-      Open the ToxRecov.R script and run the code to classify and filter the toxin candidates.
-      The script will generate several output files, including:
+Open the ToxRecov.R script and run the code to classify and filter the toxin candidates.
+The script will generate several output files, including:
 
-          - `Toxins_Candidates.tsv`: Contains high-confidence toxin candidates.
-          - `Unlikely_Toxins.tsv`: Contains sequences classified as unlikely toxins.
-          - `SCRs_WA.tsv`: Contains secreted cysteine-rich sequences.
-          - `Non_Toxins.tsv`: Contains sequences classified as non-toxins.
-          - `SCRs-WA.fasta`: Secreted cysteine-rich “mature” sequences (SCRs-WA).
-          - `SCRs-WA_precursor.fasta`: Precursor sequences of SCRs-WA in FASTA format.
+ - `Toxins_Candidates.tsv`: Contains high-confidence toxin candidates.
+ - `Unlikely_Toxins.tsv`: Contains sequences classified as unlikely toxins.
+ - `SCRs_WA.tsv`: Contains secreted cysteine-rich sequences.
+ - `Non_Toxins.tsv`: Contains sequences classified as non-toxins.
+ - `SCRs-WA.fasta`: Secreted cysteine-rich “mature” sequences (SCRs-WA).
+ - `SCRs-WA_precursor.fasta`: Precursor sequences of SCRs-WA in FASTA format.
 
       ### Generate Plots and Statistics: The script also generates various visualizations:
 
