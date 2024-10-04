@@ -77,11 +77,11 @@ pip install pandas
 # How to Run the Script
 ## Pre-requisites:
 
-    1. **Input Files:** Ensure that the following input files are available in the same directory as the script:
+  1. **Input Files:** Ensure that the following input files are available in the same directory as the script:
           - combined_output.tsv: Generated from the **TransDeTox** module.
           - toxins_keywords.csv: Contains general toxin-related keywords.
           - ToxProt_domain_Keywords.tsv: Contains Pfam domain keywords associated with toxins.
-    2. **Python Environment:** Ensure that Python 3 and the required libraries are installed.
+  2. **Python Environment:** Ensure that Python 3 and the required libraries are installed.
 
 ## Running the Script:
     1. Open a terminal and navigate to the directory containing the script and the input files.
