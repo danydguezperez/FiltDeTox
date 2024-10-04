@@ -75,15 +75,16 @@ FiltDeTox/                # Main directory containing the entire pipeline
 │
 ├── FiltDeTox.sh         # Shell script to run the entire FiltDeTox pipeline.
 ```
+
 ## Automatic Execution Using FiltDeTox.sh Pipeline
 ### Conditions (Mandatory):
 
-      - **Input Files:**
-        ◦ DeTox_output_toxins.tsv: DeTox output file (e.g., DeTox_output_Ss_SE_toxins.tsv)
-        ◦ blastp.outfmt6.w_pct_hit_length: BLASTp output file from full-length transcript analysis
-      - **Files for Keyword Matching:**
-        ◦ ToxProt_domain_Keywords.tsv: This file is generated during the process. To update it, download a new version and place it in the appropriate folder.
-        ◦ toxins_keywords.csv: A curated list of toxin-related keywords. Users can customize and update the content as necessary.
+- **Input Files**:
+        DeTox_output_toxins.tsv: DeTox output file (e.g., DeTox_output_Ss_SE_toxins.tsv)
+        blastp.outfmt6.w_pct_hit_length: BLASTp output file from full-length transcript analysis
+- **Files for Keyword Matching:**
+        ToxProt_domain_Keywords.tsv: This file is generated during the process. To update it, download a new version and place it in the appropriate folder.
+        toxins_keywords.csv: A curated list of toxin-related keywords. Users can customize and update the content as necessary.
 
 > Note: Since generating or updating keyword lists is a specialized task, it is recommended to run
 > this step separately. The toxins keyword list can be reviewed and edited by experts according to
@@ -91,9 +92,10 @@ FiltDeTox/                # Main directory containing the entire pipeline
 
 ## Dependencies
 ### Python-based Scripts:
-      - **Python 3:** Required for running the TransDeTox.py and ToxinKeyMatch.py scripts.
-      - **pandas:** For efficient data manipulation and processing.
-      - **multiprocessing:** To handle large datasets efficiently.
+
+- **Python 3:** Required for running the TransDeTox.py and ToxinKeyMatch.py scripts.
+- **pandas:** For efficient data manipulation and processing.
+- **multiprocessing:** To handle large datasets efficiently.
 
 Install the required dependencies with:
 `bash`
@@ -136,6 +138,6 @@ The FiltDeTox.sh script is designed to link all three modules of the pipeline (T
 Note: The integrated pipeline has only been tested on **Linux** systems.
 
 ## How to Run the Shell Script:
-    1. **Clone the Repository:**
+  1. **Clone the Repository:**
 Download the FiltDeTox repository or copy all necessary files into
 
