@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # FilDeTox Pipeline Script
-# This script runs the full FilDeTox pipeline across all three modules.
+# This script runs the full FiltDeTox pipeline across all three modules.
 
 # Step 1: TransDeTox Module
 echo "Running TransDeTox Module..."
