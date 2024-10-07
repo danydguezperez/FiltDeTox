@@ -153,10 +153,10 @@ Once the cloning is complete, navigate into the project folder using the cd comm
   3. **Set Permissions**:
 Ensure the shell script is executable:
 
-       ´´´
+     ```
      #bash
        chmod +x FiltDeTox.sh
-     ´´´
+     ``` 
      
   5. **Run the Script**:
 Run the full pipeline using the shell script:
