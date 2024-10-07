@@ -140,4 +140,25 @@ Note: The integrated pipeline has only been tested on **Linux** systems.
 ## How to Run the Shell Script:
   1. **Clone the Repository:**
 Download the FiltDeTox repository or copy all necessary files into
+a directory.
+  2. **Set Permissions**:
+Ensure the shell script is executable:
+       bash
+       chmod +x FiltDeTox.sh
+  3. **Run the Script**:
+Run the full pipeline using the shell script:
+       bash
+       ./FiltDeTox.sh
+
+This script will automatically call each module in sequence:
+  1. TransDeTox.py
+  2. ToxinKeyMatch.py
+  3. ToxRecov.R
+Upon completion, the final output files, figures, and statistics will be saved in their respective folders. Users can check the output for toxin candidates, summary statistics, and generated plots.
+
+>Note:
+>All the scripts within the FiltDeTox pipeline can be run standalone. If you experience issues, particularly with the ToxRecov.R script, detailed >explanations and instructions are provided in the respective README.md files in each module directory.
+
+Happy Toxin Identification!
+#done!!!
 
