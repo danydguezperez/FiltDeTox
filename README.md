@@ -168,9 +168,9 @@ Run the full pipeline using the shell script:
 
 This script will automatically call each module in sequence:
 
-  1. TransDeTox.py
-  2. ToxinKeyMatch.py
-  3. ToxRecov.R
+  1. **TransDeTox.py**
+  2. **ToxinKeyMatch.py**
+  3. **ToxRecov.R**
      
 Upon completion, the final output files, figures, and statistics will be saved in their respective folders. Users can check the output for toxin candidates, summary statistics, and generated plots.
 
