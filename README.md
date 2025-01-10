@@ -187,7 +187,7 @@ Ensure the shell script is executable:
 
      ```
      #bash
-       chmod +x FiltDeTox.sh
+       chmod +x FiltDeTox_v2.0.sh
      ``` 
      
   5. **Run the Script**:
@@ -195,7 +195,7 @@ Run the full pipeline using the shell script:
 
      ```
      #bash
-       ./FiltDeTox.sh
+       ./FiltDeTox_v2.0.sh
      ```
 
 This script will automatically call each module in sequence:
