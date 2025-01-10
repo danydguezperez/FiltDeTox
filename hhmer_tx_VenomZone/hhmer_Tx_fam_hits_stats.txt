@@ -1,0 +1,23 @@
+Sea_anem_type_3_BDS_potassium_channel_Tx_fam: 2 ORFs
+Sea_anem_sodium_channel_inhibitory_Tx_fam_Type_II_subfam: 1 ORFs
+EGF_domain_peptide_fam: 6 ORFs
+Sea_anem_structural_class_9a_fam: 1 ORFs
+Jellyfish_Tx_fam_Type_I_subfam: 1 ORFs
+Actinoporin_fam_HALT_subfam: 1 ORFs
+Jellyfish_Tx_fam_Type_II_subfam: 1 ORFs
+Sea_anem_type_6_potassium_channel_Tx_fam: 1 ORFs
+Acrorhagin_I_fam: 1 ORFs
+PLA2_fam_Group_III_subfam: 4 ORFs
+Sea_anem_type_5_potassium_channel_Tx_fam: 1 ORFs
+Sea_anem_type_1_potassium_channel_Tx_fam_Type_1b_subfam: 1 ORFs
+Sea_anem_type_1_potassium_channel_Tx_fam_Type_1a_subfam: 9 ORFs
+Sea_anem_short_Tx_type_III_fam: 1 ORFs
+Sea_anem_sodium_channel_inhibitory_Tx_fam_Type_I_subfam: 1 ORFs
+PLA2_fam: 4 ORFs
+Sea_anem_sodium_channel_inhibitory_Tx_fam: 1 ORFs
+SCRiPs_fam: 1 ORFs
+Kunitz-type_fam_Sea_anem_type_2_potassium_channel_Tx_subfam: 14 ORFs
+Actinoporin_fam_Sea_anem_subfam: 1 ORFs
+Sea_anem_8_Tx_fam: 4 ORFs
+NEP3_fam: 12 ORFs
+Total Unique ORFs hhmer Tx hits: 47
