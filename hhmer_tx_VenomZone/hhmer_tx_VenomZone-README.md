@@ -39,26 +39,25 @@ FiltDeTox/                # Main directory containing the entire pipeline
 - **Python 3**: Required for processing and summarizing results using `hhmerTxMatch.py`.
 - **pandas**: Install using:
 
-  ```# bash
-  pip install pandas
-```
+`pip install pandas`
+
 **Script Summary**:
-This Bash script automates the **HMMER** workflow to analyze pre-aligned sequences of **cnidarian toxins** retrieved from the **VenomZone** database. These pre-aligned sequences, grouped by toxin family, are stored in the folder **tx_VenomZone_aln**. The script uses these alignments to build HMM profiles and searches them against a **`.fasta file`** located **two levels up** from the working directory, specifically in the root of the **FiltDeTox** directory. This script can be used to profile other animal toxins families from other taxon, by naming the file with containing the aligned FASTA sequences with this format `**_aln.fasta**`, placed in the proper directory. 
+This Bash script automates the **HMMER** workflow to analyze pre-aligned sequences of **cnidarian toxins** retrieved from the **VenomZone** database. These pre-aligned sequences, grouped by toxin family, are stored in the folder **tx_VenomZone_aln**. The script uses these alignments to build HMM profiles and searches them against a **`.fasta file`** located **two levels up** from the working directory, specifically in the root of the **FiltDeTox** directory. This script can be used to profile other animal toxins families from other taxon, by naming the file with containing the aligned FASTA sequences with this format `*_aln.fasta`, placed in the proper directory. 
 
 **Main Steps the Script Performs**:
 1.	**Setup Directories**:
 -	Identifies and configures key directories:
 -	**tx_VenomZone_aln** (working directory with pre-aligned toxin sequences).
--	The FiltDeTox root directory two levels up, containing the target `**.fasta file**` for hmmsearch.
+-	The FiltDeTox root directory two levels up, containing the target **`.fasta file`** for hmmsearch.
 2.	**Clean Previous Results**:
 -	Deletes all files from the working directory **except** `.sh` scripts and pre-aligned `*_aln.fasta` files, ensuring a clean start.
 3.	**Build HMM Profiles**:
--	For each pre-aligned **toxin family** in the **tx_VenomZone_aln** folder (files ending with `**.fasta**`), the script:
+-	For each pre-aligned **toxin family** in the **tx_VenomZone_aln** folder (files ending with **`.fasta`**), the script:
 -	Builds an HMM profile using hmmbuild.
 -	Logs progress in a summary file **summary_hhmer.txt**.
 4.	**Run hmmsearch**:
--	Searches each HMM profile against the provided `**.fasta file**` in the root of the `**FiltDeTox**` directory.
--	Extracts matched ORFs and writes them to corresponding `**_grep.txt files**`.
+-	Searches each HMM profile against the provided **`.fasta file`** in the root of the **`FiltDeTox`** directory.
+-	Extracts matched ORFs and writes them to corresponding **`_grep.txt files`**.
 -	Logs families with **"No matches found"** where no ORFs are detected.
 5.	**Generate Results in Tabular Format**:
 -	Concatenates all _grep.txt files into a single summary table named **hhmer_Tx_hits.csv**.
@@ -68,11 +67,12 @@ This Bash script automates the **HMMER** workflow to analyze pre-aligned sequenc
 -	Renames it to **hhmer_Tx_fam_hits.csv**.
 -	Cleans up the column headers by removing the `_aln` suffix for a cleaner presentation.
 7.	**Extract Sequences**:
--	Extracts matching sequences for each toxin family listed in `_grep.txt` files from the target `**.fasta file**`.
--	Saves these sequences into individual **`_grep.fasta`** files.
+-	Extracts matching sequences for each toxin family listed in **`_grep.txt` files** from the target **`.fasta file**`**.
+-	Saves these sequences into individual **`_grep.fasta` files**.
 8.	**Generate ORF Statistics (New Step)**:
 -	Counts the number of matched ORFs per toxin family.
 -	Saves the statistics in a report file named **hhmer_Tx_fam_hits_stats.txt**, formatted as:
+  
 ```
 Acrorhagin_I_fam: 5 ORFs
 Actinoporin_fam_HALT_subfam: 3 ORFs
@@ -93,35 +93,41 @@ The script efficiently automates the workflow to build HMM profiles, search toxi
 This Python script processes HMMER search results and produces a summarized mapping of ORFs (Open Reading Frames) to their corresponding toxin families. Additionally, it generates a final report with the total count of unique ORFs.
 
 **Key Steps of the Script**:
+
 1.	**Input Data**:
-•	**hhmer_Tx_fam_hits.csv**: The input file containing ORFs grouped under different toxin family columns.
-•	This file must be in the same directory as the script.
+-	**hhmer_Tx_fam_hits.csv**: The input file containing ORFs grouped under different toxin family columns.
+-	This file must be in the same directory as the script.
+
 2.	**Processing ORF-to-Toxin Mapping**:
-•	Reads the input file (**hhmer_Tx_fam_hits.csv**).
-•	For each toxin family (column in the file), it extracts the ORFs.
-•	Skips any empty values or invalid rows.
-•	Combines families for duplicate ORFs:
-•	If an ORF belongs to multiple families, the family names are joined by semicolons (;).
+-	Reads the input file (**hhmer_Tx_fam_hits.csv**).
+-	For each toxin family (column in the file), it extracts the ORFs.
+-	Skips any empty values or invalid rows.
+-	Combines families for duplicate ORFs:
+-	If an ORF belongs to multiple families, the family names are joined by semicolons (;).
+
 3.	**Output 1**:
-•	Creates a new file **hhmer_Tx_orf_mapping.csv**.
-•	This file contains two columns:
-•	ORF: Unique ORFs from the input.
-•	ToxinFamily: Corresponding toxin family (or families) for each ORF.
+-	Creates a new file **hhmer_Tx_orf_mapping.csv**.
+-	This file contains two columns:
+-	ORF: Unique ORFs from the input.
+-	ToxinFamily: Corresponding toxin family (or families) for each ORF.
+
 4.	**Appending ORF Statistics**:
-•	Calculates the **total unique ORFs**:
-•	Excludes rows with "No matches found".
-•	Ensures the header or invalid rows are skipped.
-•	Appends this count as a final line to the **hhmer_Tx_fam_hits_stats.txt** file.
-•	Example of the appended line:
+-	Calculates the **total unique ORFs**:
+-	Excludes rows with **"No matches found"**.
+-	Ensures the header or invalid rows are skipped.
+-	Appends this count as a final line to the **hhmer_Tx_fam_hits_stats.txt** file.
+-	Example of the appended line:
+
 ```
 Total Unique ORFs hhmer Tx hits: 15
 ```
+
 **Outputs**:
 1.	**hhmer_Tx_orf_mapping.csv**:
-•	A clean file mapping ORFs to their toxin families.
+-	A clean file mapping ORFs to their toxin families.
 2.	**hhmer_Tx_fam_hits_stats.txt**:
-•	Contains counts of ORFs per toxin family (previously generated).
-•	Adds a final line summarizing the **total unique ORFs** found.
+-	Contains counts of ORFs per toxin family (previously generated).
+-	Adds a final line summarizing the **total unique ORFs** found.
 
 **Execution Flow**:
 1.	The script processes the input file **hhmer_Tx_fam_hits.csv**.
