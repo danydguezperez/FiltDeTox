@@ -74,9 +74,9 @@ FiltDeTox/                # Main directory containing the entire pipeline
 │   ├── Non_Toxins_precursor.fasta          # FASTA file of non-toxin precursors
 │   ├── Non_Toxins.tsv                      # Classification of non-toxin sequences
 │   ├── Pfam_Domain_Summary_with_ORFs_Genes.tsv # Pfam domain and ORF summary
-│   ├── SCRs_WA.fasta                     # Secreted cysteine-rich “mature” sequences (SCRs-WA)
+│   ├── SCRs_WA_mature.fasta                # Secreted cysteine-rich “mature” sequences (SCRs-WA)
 │   ├── SCRs_WA.tsv                         # Detailed information on SCRs-WA sequences
-│   ├── SCRs-WA_precursor.fasta             # Precursor sequences of SCRs-WA
+│   ├── SCRs_WA_precursor.fasta             # Precursor sequences of SCRs-WA
 │   ├── Toxins_Candidate_Rating_PieChart.png # Pie chart for toxin candidate ratings
 │   ├── Toxins_Candidates_mature.fasta    # FASTA file of toxin candidates (mature peptides)
 │   ├── Toxins_Candidates_precursor.fasta   # FASTA file of toxin candidates (precursors)
