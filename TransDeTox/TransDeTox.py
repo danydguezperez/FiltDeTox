@@ -9,9 +9,9 @@ def process_row(detox_row, blastp_df):
 
 if __name__ == "__main__":
     # Use relative paths directly
-    TransDecoder_output_path = 'TransDeTox/blastp.outfmt6.w_pct_hit_length'
-    DeTox_output_path = 'TransDeTox/DeTox_output_Ss_SE_toxins.tsv'
-    matched_content_path = 'TransDeTox/matched_content.tsv'  # Save in the current directory
+    TransDecoder_output_path = 'blastp.outfmt6.w_pct_hit_length'
+    DeTox_output_path = 'DeTox_output_Ss_SE_toxins.tsv'
+    matched_content_path = 'matched_content.tsv'  # Save in the current directory
     
     with open(TransDecoder_output_path, 'r') as original_file:
         lines = original_file.readlines()
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     combined_df = pd.merge(detox_df, filtered_matched_content_df, on='ID', how='left')
     
-    combined_output_path = 'TransDeTox/combined_output.tsv'  # Save in the current directory
+    combined_output_path = 'combined_output.tsv'  # Save in the current directory
     combined_df.to_csv(combined_output_path, sep='\t', index=False)
     print(f"Combined data saved to '{combined_output_path}'.")
 
