@@ -40,10 +40,10 @@ def add_keywords_column(data_path, keywords_path_1, keywords_path_2, output_path
 
 # Usage example, adjust the file paths as needed
 if __name__ == "__main__":
-    combined_output_path = 'TransDeTox/combined_output.tsv'
-    keywords_path_1 = 'ToxinKeyMatch/toxins_keywords.csv'  # First set of keywords
-    keywords_path_2 = 'ToxinKeyMatch/ToxProt_domain_Keywords.tsv'  # Second set of keywords
-    output_path = 'ToxinKeyMatch/combined_output_keywords.tsv'
+    combined_output_path = '../TransDeTox/combined_output.tsv'
+    keywords_path_1 = 'toxins_keywords.csv'  # First set of keywords
+    keywords_path_2 = 'ToxProt_domain_Keywords.tsv'  # Second set of keywords
+    output_path = 'combined_output_keywords.tsv'
 
     add_keywords_column(combined_output_path, keywords_path_1, keywords_path_2, output_path)
 
