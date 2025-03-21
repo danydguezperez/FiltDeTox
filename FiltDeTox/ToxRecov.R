@@ -574,3 +574,67 @@ generate_precursor_fasta("Unlikely_Toxins.tsv", "Unlikely_Toxins_precursor.fasta
 
 generate_mature_fasta("SCRs_WA.tsv", "SCRs_WA_mature.fasta")
 generate_precursor_fasta("SCRs_WA.tsv", "SCRs_WA_precursor.fasta")
+
+# -------------------- Match Full-Length Sequences (Python Integration) --------------------
+# Detect the full-length FASTA file (assumed to be one level up and ending with .fasta)
+
+''
+if (!requireNamespace("Biostrings", quietly = TRUE)) {
+  install.packages("BiocManager")
+  BiocManager::install("Biostrings")
+}
+''
+
+# Step 1: Locate the DeTox FASTA in parent directory
+parent_dir <- normalizePath("..")
+fasta_files <- list.files(path = parent_dir, pattern = "\\.fasta$", full.names = TRUE)
+
+if (length(fasta_files) == 0) {
+  stop("❌ No .fasta file found one level up from current working directory.")
+}
+
+detox_fasta_path <- fasta_files[1]
+cat("✅ Using DeTox FASTA file:", detox_fasta_path, "\n")
+
+# Step 2: Extract only sequences with 'type:complete' in the header
+fasta_sequences <- readAAStringSet(detox_fasta_path)
+headers <- names(fasta_sequences)
+complete_ids <- headers[grepl("type:complete", headers)]
+complete_ids <- sapply(strsplit(complete_ids, " "), `[`, 1)  # Keep only the first token in the header (ID)
+
+# Step 3: Read TSV and label sequences
+tsv_input <- "Toxins_Candidates.tsv"
+df <- read.delim(tsv_input, sep = "\t", stringsAsFactors = FALSE)
+
+df <- df %>%
+  mutate(full.length = ifelse(ID %in% complete_ids, "complete", "partial"))
+
+# Step 4: Save updated TSV
+output_tsv <- "Toxins_Candidates_full-length.tsv"
+write.table(df, output_tsv, sep = "\t", row.names = FALSE, quote = FALSE)
+cat("✅ Full-length classification added and saved to:", output_tsv, "\n")
+
+# Step 5: Save full-length precursor FASTA of toxin candidates
+precursor_fasta <- readAAStringSet("Toxins_Candidates_precursor.fasta")
+precursor_ids <- names(precursor_fasta)
+precursor_clean_ids <- sapply(strsplit(precursor_ids, " "), `[`, 1)
+
+matching_ids <- precursor_clean_ids %in% complete_ids
+filtered_fasta <- precursor_fasta[matching_ids]
+output_fasta <- "Toxins_Candidates_precursor_full-length-seqs.fasta"
+writeXStringSet(filtered_fasta, filepath = output_fasta)
+
+cat("✅ Full-length precursor FASTA saved to:", output_fasta, "\n")
+
+# Step 6: Write improved and clarified stats
+
+detox_fasta_label <- "DeTox_*.fasta"  # Generalized label- Get just the filename from the full DeTox FASTA path
+stats_file <- "Toxins_Candidates_full-length_stats.txt"
+writeLines(
+  c(
+    paste("Number of complete sequences in", detox_fasta_label, ":", length(complete_ids)),
+    paste("Number of complete sequences in Toxins_Candidates_precursor_full-length-seqs.fasta:", length(filtered_fasta))
+  ),
+  con = stats_file
+)
+cat("📊 Stats written to", stats_file, "\n")
