@@ -1,0 +1,2 @@
+Number of complete sequences in DeTox_output_Ss_SE_candidate_toxins.fasta : 1476
+Number of complete sequences in Unlikely_Toxins_precursor_full-length-seqs.fasta : 15
