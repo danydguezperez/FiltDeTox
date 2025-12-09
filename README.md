@@ -18,7 +18,7 @@ This module merges the outputs from TransDecoder BLASTp and DeTox, identifying c
 This module classifies sequences based on toxin-related Pfam domains and curated toxin-related keywords. It applies keyword matching and domain filtering based on curated lists of metazoan toxins and venom proteins (filtered from UniProt), allowing for more precise identification of potential toxin sequences.
 
 ### 4. FiltDeTox
-The final module further refines the dataset by applying an additional filtering step based on binary classifications generated in previous modules. It retains only high-confidence toxin candidates, eliminating sequences classified as non-toxins or unlikely toxins based on ToxinKeyMatch and DeTox flags. Additionally, this module improves filtering by introducing comprehensive rules to reduce complexity. It generates four files summarizing the filtered categories (`Toxins_Candidates`, `Non_Toxins`, `Unlikely_Toxins`, and `SCRs_WA`), along with their corresponding mature and precursor FASTA files for downstream analyses, such as network modeling and bioactivity studies.
+The final module further refines the dataset by applying an additional filtering step based on binary classifications generated in previous modules. It retains only high-confidence toxin candidates, eliminating sequences classified as non-toxins or unlikely toxins based on ToxinKeyMatch and DeTox flags. Additionally, this module improves filtering by introducing comprehensive rules to reduce complexity. It generates four files summarizing the filtered categories (`Toxins_Candidates`, `Non_Toxins`, `Unlikely_Toxins`, and `SCRs_WA`), along with their corresponding mature and precursor/full-length (type:complete) precursor sequences for each category, in both tabular and FASTA files for downstream analyses, such as network modeling and bioactivity studies.
 
 ## Execution and Customization
 
@@ -31,66 +31,48 @@ The final module further refines the dataset by applying an additional filtering
 ## Pipeline Structure and Enclosed Files
 
 ```
-FiltDeTox/                # Main directory containing the entire pipeline
-├── hhmer_tx_VenomZone/   # Module for HMMER-based toxin family identification
-│   ├── tx_VenomZone_aln/     # Pre-aligned toxin family sequences and script
-│   │   ├── *_aln.fasta       # Pre-aligned sequences for each toxin family
-│   │   ├── *_aln.hmm         # HMM profiles built using hmmbuild
-│   │   ├── *_aln_hmmsearch.out  # HMMER search results
-│   │   ├── *_aln_grep.txt    # ORFs matched for each toxin family
-│   │   ├── *_aln_grep.fasta  # Extracted sequences for matched ORFs
-│   │   ├── summary_hhmer.txt # Log file summarizing HMMER processes
-│   │   └── run_hmmbuild_and_hmmsearch.sh  # Script to run HMMER steps
-│   ├── hhmer_Tx_fam_hits.csv              # Summary of ORFs per toxin family
-│   ├── hhmer_Tx_orf_mapping.csv           # Mapping of ORFs to toxin families
-│   ├── hhmer_Tx_fam_hits_stats.txt        # Statistics on ORFs per toxin family
-│   ├── hhmer_tx_VenomZone-README.md       # README file for the HMMER-based module
-│   └── hhmerTxMatch.py                    # Python script for processing and summarizing HMMER results
-├── TransDeTox/           # Processes and merges BLASTp and DeTox results
-│   ├── blastp.outfmt6.w_pct_hit_length    # BLASTp output file with hit length percentage
-│   ├── combined_output.tsv                # Merged output of BLASTp and DeTox results
-│   ├── DeTox_output_Ss_SE_toxins.tsv      # DeTox output (example data)
-│   ├── matched_content.tsv                # Intermediate file matching BLASTp and DeTox outputs
-│   ├── TransDeTox.py                      # Python script for processing and merging results
-│   └── TransDeTox-README.md               # README file for the TransDeTox module
-├── ToxinKeyMatch/        # Enhances toxin identification through keyword and domain matching
-│   ├── ToxinKeyMatch.py                  # Python script for keyword and Pfam domain matching
-│   ├── combined_output_keywords.tsv      # Output after matching
-│   ├── toxins_keywords.csv               # Curated list of toxin-related keywords
-│   ├── ToxProt_domain_Keywords.tsv       # Pfam domain keywords for toxins
-│   ├── ToxinKeyMatch-README.md           # README file with instructions for the ToxinKeyMatch module
-│   └── Extract_ToxProtDomain/            # Submodule for extracting Pfam domains
-│       ├── Extract_ToxProtDomain.md      # Documentation for Pfam domain extraction
-│       ├── Extract_ToxProtDomain.py      # Python script for Pfam domain extraction
-│       └── uniprotkb_taxonomy_id_33208_AND_cc_tiss_(...)_pfam.xlsx # ToxProt data
-├── FiltDeTox/            # Final classification and filtering of toxin candidates
-│   ├── Dendrogram_and_DotPlot_ORFs_TPM_by_ORF.pdf     # Plot of toxin candidates
-│   ├── Dendrogram_and_DotPlot_ORFs_TPM_by_ORF.png     # High-resolution plot image
-│   ├── FiltDeTox_Stats.tsv                 # Summary statistics of filtered sequences
-│   ├── Full_Classified_Data.tsv            # Complete classification of sequences
-│   ├── NestedPie_FiltDeTox_Flag_Sorted.png # Sorted pie chart visualization
-│   ├── NestedPie_FiltDeTox.png             # Summary pie chart
-│   ├── Non_Toxins_mature.fasta             # FASTA file of non-toxin mature peptides
-│   ├── Non_Toxins_precursor.fasta          # FASTA file of non-toxin precursors
-│   ├── Non_Toxins.tsv                      # Classification of non-toxin sequences
-│   ├── Pfam_Domain_Summary_with_ORFs_Genes.tsv # Pfam domain and ORF summary
-│   ├── SCRs_WA_mature.fasta                # Secreted cysteine-rich "mature" sequences (SCRs-WA)
-│   ├── SCRs_WA.tsv                         # Detailed information on SCRs-WA sequences
-│   ├── SCRs_WA_precursor.fasta             # Precursor sequences of SCRs-WA
-│   ├── Toxins_Candidate_Rating_PieChart.png # Pie chart for toxin candidate ratings
-│   ├── Toxins_Candidates_mature.fasta      # FASTA file of toxin candidates (mature peptides)
-│   ├── Toxins_Candidates_precursor.fasta   # FASTA file of toxin candidates (precursors)
-│   ├── Toxins_Candidates_precursor_full-length-seqs.fasta # Full-length precursor sequences (candidates only)
-│   ├── Toxins_Candidates_full-length.tsv   # TSV file with full-length classification tag
-│   ├── Toxins_Candidates_full-length_stats.txt # Summary stats for full-length toxin candidates
-│   ├── Toxins_Candidates.tsv               # High-confidence toxin candidates
-│   ├── ToxRecov.R                          # R script for classification and filtering
-│   ├── ToxRecov-README.md                  # Instructions and details for running ToxRecov.R
-│   ├── Unlikely_Toxins_mature.fasta        # FASTA of unlikely toxins (mature peptides)
-│   ├── Unlikely_Toxins_precursor.fasta     # FASTA of unlikely toxins (precursors)
-│   ├── Unlikely_Toxins.tsv                 # Classification of unlikely toxins
-├── DeTox_output_Ss_candidate_toxins.fasta     # DeTox output (example data)
-├── FiltDeTox_v2.0.sh     # Shell script to run the entire FiltDeTox pipeline
+├── FiltDeTox/            # Final classification and filtering of toxin candidates (ToxRecov.R)
+│   ├── StackedBar_FiltDeTox_Classification_Sorted.png        # Stacked bar: FiltDeTox classes (PNG)
+│   ├── StackedBar_FiltDeTox_Classification_Sorted.pdf        # Stacked bar: FiltDeTox classes (PDF)
+│   ├── StackedBar_DeTox_Flags_Sorted.png                     # Stacked bar: DeTox flags (PNG)
+│   ├── StackedBar_DeTox_Flags_Sorted.pdf                     # Stacked bar: DeTox flags (PDF)
+│   ├── NestedPie_FiltDeTox.png                               # Nested pie (unsorted DeTox flags, PNG)
+│   ├── NestedPie_FiltDeTox.pdf                               # Nested pie (unsorted DeTox flags, PDF)
+│   ├── NestedPie_FiltDeTox_Flag_Sorted.png                   # Nested pie (flags sorted by abundance, PNG)
+│   ├── NestedPie_FiltDeTox_Flag_Sorted.pdf                   # Nested pie (flags sorted by abundance, PDF)
+│   ├── Toxins_Candidate_Rating_PieChart.png                  # Rating composition within Toxins-Candidates (PNG)
+│   ├── Toxins_Candidate_Rating_PieChart.pdf                  # Rating composition within Toxins-Candidates (PDF)
+│   ├── Dendrogram_and_DotPlot_ORFs_TPM_by_ORF.png            # Pfam domain clustering and TPM dot plot (PNG)
+│   ├── Dendrogram_and_DotPlot_ORFs_TPM_by_ORF.pdf            # Pfam domain clustering and TPM dot plot (PDF)
+│   ├── FiltDeTox_Stats.tsv                                   # Summary statistics of filtered sequences per class
+│   ├── Full_Classified_Data.tsv                              # Complete classification of sequences (all columns)
+│   ├── Pfam_Domain_Summary_with_ORFs_Genes.tsv               # Pfam domain and ORF/gene summary with TPM
+│   ├── Non_Toxins.tsv                                        # Classification of non-toxin sequences
+│   ├── Non_Toxins_mature.fasta                               # FASTA: Non-Toxins, mature peptides
+│   ├── Non_Toxins_precursor.fasta                            # FASTA: Non-Toxins, precursors
+│   ├── Toxins_Candidates.tsv                                 # High-confidence toxin candidates
+│   ├── Toxins_Candidates_mature.fasta                        # FASTA: Toxins-Candidates, mature peptides
+│   ├── Toxins_Candidates_precursor.fasta                     # FASTA: Toxins-Candidates, precursors
+│   ├── Unlikely_Toxins.tsv                                   # Classification of unlikely toxins
+│   ├── Unlikely_Toxins_mature.fasta                          # FASTA: Unlikely-Toxins, mature peptides
+│   ├── Unlikely_Toxins_precursor.fasta                       # FASTA: Unlikely-Toxins, precursors
+│   ├── SCRs_WA.tsv                                           # Detailed information on SCRs-WA sequences
+│   ├── SCRs_WA_mature.fasta                                  # FASTA: SCRs-WA, mature peptides
+│   ├── SCRs_WA_precursor.fasta                               # FASTA: SCRs-WA, precursors
+│   ├── Toxins_Candidates_full-length.tsv                     # Toxins-Candidates with full.length tag (complete/partial)
+│   ├── Toxins_Candidates_precursor_full-length-seqs.fasta    # Full-length precursor sequences: Toxins-Candidates
+│   ├── Toxins_Candidates_full-length_stats.txt               # Summary stats: full-length Toxins-Candidates
+│   ├── Unlikely_Toxins_full-length.tsv                       # Unlikely-Toxins with full.length tag
+│   ├── Unlikely_Toxins_precursor_full-length-seqs.fasta      # Full-length precursor sequences: Unlikely-Toxins
+│   ├── Unlikely_Toxins_full-length_stats.txt                 # Summary stats: full-length Unlikely-Toxins
+│   ├── SCRs_WA_full-length.tsv                               # SCRs-WA with full.length tag
+│   ├── SCRs_WA_precursor_full-length-seqs.fasta              # Full-length precursor sequences: SCRs-WA
+│   ├── SCRs_WA_full-length_stats.txt                         # Summary stats: full-length SCRs-WA
+│   ├── Non_Toxins_full-length.tsv                            # Non-Toxins with full.length tag
+│   ├── Non_Toxins_precursor_full-length-seqs.fasta           # Full-length precursor sequences: Non-Toxins
+│   ├── Non_Toxins_full-length_stats.txt                      # Summary stats: full-length Non-Toxins
+│   ├── ToxRecov.R                                            # R script for classification, summaries, plots, exports
+│   ├── ToxRecov-README.md                                    # Instructions and details for running ToxRecov.R
 ```
 
 
@@ -116,15 +98,16 @@ To run the FiltDeTox module using R, ensure **R** or **RStudio** is installed. I
 install.packages("dplyr")
 install.packages("tidyr")
 install.packages("ggplot2")
-install.packages("stringdist")
 install.packages("ape")
 install.packages("cowplot")
-install.packages("RcolorBrewer")
+install.packages("RColorBrewer")
+install.packages("grid")
+install.packages("ggnewscale")
 
-# Install Bioconductor manager to install ggtree:
+# Install Bioconductor manager to install ggtree and Biostrings:
 install.packages("BiocManager")
 BiocManager::install("ggtree")
-
+BiocManager::install("Biostrings")
 ```
 # Alternatively, install ggtree using devtools (optional):
 ```
